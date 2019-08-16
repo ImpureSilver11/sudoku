@@ -1,4 +1,5 @@
-// import { create, check, rule, etc } from './sample'
-export function test(amount: number){
-  return amount **2
-}
+// var $ = require('jquery');
+// var createTable = require('./createTable.js');
+// console.log(createTable.initSudoku)
+import { initSudoku } from './createTable'
+console.log(initSudoku)
