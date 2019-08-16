@@ -1,0 +1,11 @@
+{
+  "name": "sudoku",
+  "version": "0.0.0",
+  "description": "sudoku",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^12.7.2",
+    "jquery": "3.4.1"
+  }
+}
