@@ -1,6 +1,11 @@
 
-.sudoku-table {
+#sudoku-table {
+  color: red;
   width: 500px;
   margin: auto;
   height: 500px;
+}
+
+.head {
+  color: rebeccapurple;
 }
