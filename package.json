@@ -6,6 +6,10 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^12.7.2",
-    "jquery": "3.4.1"
+    "jquery": "3.4.1",
+    "webpack": "^4.39.2"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.6"
   }
 }
