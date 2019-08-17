@@ -1,6 +1,7 @@
-"use strict";
+import './main.css';
 var Sudoku = require('./generateSudoku');
+var Question = require('./generateQuestion');
 var anser = new Sudoku.createAnser();
-var question = new Sudoku.createQuestion(anser);
-var table = require('./Table');
+var question = new Question.createQuestion(anser);
+var table = require('./table');
 table.create(question);

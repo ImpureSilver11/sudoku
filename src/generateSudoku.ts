@@ -1,63 +1,66 @@
-var hoge = initArray()
+var Anser = initArray()
 
 export function createAnser(){
   for(var rowCount = 0; rowCount < 9 ; rowCount++){
     if (rowCount == 0){
-      hoge[rowCount] = arrayShuffle()
+      Anser[rowCount] = arrayShuffle()
     }else{
       for(var colCount = 0; colCount < 9; colCount++){
         arrayShuffle().some(function(num){
-          if(allotNumber(rowCount,colCount,num)== true){
-            hoge[rowCount][colCount] = num
+          // 入れて大丈夫かどうかのチェック処理
+          if(numberValidity(rowCount,colCount,num) == true){
+            Anser[rowCount][colCount] = num
             return true
           }
         })
-        // 入れて大丈夫かどうかのチェック処理
-        if(hoge[rowCount][colCount] == 0){
+        if(Anser[rowCount][colCount] == 0){
           // 処理を最初からやり直したい
         }
       }
       // fuga[rowCount] = arrayShuffle([1,2,3,4,5,6,7,8,9])
     }
   }
-  return hoge
-}
-
-export function createQuestion(Anser: any){
-  var Question = Anser
-  // 答えの一部を切り取る処理
-  // ランダムな位置を取得
-  // 切り取れるかどうか判別
-  // 切り取れる場合は0か何かに置き換える。
-  // これをランダム回数繰り返す
-  return Question
-}
-
-// 0埋め配列の作成
-function initArray(){
-  var Anser: any[] = new Array(9)
-  for(var i = 0; i < 9; i++){
-    var row = new Array(9)
-    row = [0,0,0,0,0,0,0,0,0]
-    Anser[i] = row
-  }
+  console.log(Anser)
   return Anser
 }
 
 // 数値割り当て
-function allotNumber(row:number, col:number, value:number ):boolean {
-  // 縦列に同じ値がないか調べる。
-  // 横列に同じ値がないか調べる.
-  // 3×3マスないに同じ値がないか調べる。
+function numberValidity(row:number, col:number, value:number ):boolean {
+  return (rowValidity(row,col,value) == true &&
+          colValidity(row,col,value) == true &&
+          aroundValidity(row,col,value) == true) ? true : false
+}
+// 横列に同じ値がないか調べる.
+function rowValidity(rowindex: number, colindex: number, value:number):boolean{
+  console.log(value)
+  for(var i = 0; i <= colindex; i++){
+    if(Anser[rowindex][i] == value){
+      return false
+    }else if(colindex == i ){
+      return true
+    }
+  }
+  return false
+}
+// 縦列に同じ値がないか調べる。
+function colValidity(rowindex: number, colindex: number, value:number):boolean{
+  for(var i = 0; i <= rowindex; i++){
+    if(Anser[i][colindex] == value){
+      return false
+    }else if(rowindex == i ){
+      return true
+    }
+  }
+  return false
+}
+// 3×3マスないに同じ値がないか調べる。
+function aroundValidity(rowindex: number, colindex: number, value:number):boolean{
+  // どのいちに属しているのか
+  var row = rowindex % 3
+  var col = colindex % 3
+  // 周囲9マスを捜索
   return true
 }
-// 処理切り取り
-// 縦列チェック処理
-// 横列チェック処理
-function rowValidity(rowindex: number, colindex: number){
-
-}
-// 周囲マスチェック処理
 
 // generate処理
 
@@ -71,4 +74,15 @@ function arrayShuffle(){
     num[i] = str;
   }
   return num
+}
+
+// 0埋め配列の作成
+function initArray():any[]{
+  var value: any[] = new Array(9)
+  for(var i = 0; i < 9; i++){
+    var row = new Array(9)
+    row = [0,0,0,0,0,0,0,0,0]
+    value[i] = row
+  }
+  return value
 }
