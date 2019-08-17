@@ -4,15 +4,25 @@ export function init() {
     var limit = 0;
     while (hoge) {
         value = createAnser();
-        // これだと無限ループになる。
+        // TODO: 生成できる確率が低すぎる。
         hoge = check(value);
         if (hoge == true) {
             limit++;
         }
-        if (limit == 100) {
+        if (limit == 10) {
+            value = [
+                [3, 5, 1, 8, 4, 9, 7, 2, 6],
+                [4, 2, 8, 3, 6, 7, 5, 1, 9],
+                [7, 6, 9, 2, 5, 1, 8, 4, 3],
+                [2, 3, 5, 9, 7, 6, 1, 8, 4],
+                [1, 9, 4, 5, 8, 3, 6, 7, 2],
+                [8, 7, 6, 4, 1, 2, 3, 9, 5],
+                [6, 8, 3, 1, 9, 4, 2, 5, 7],
+                [5, 4, 2, 7, 3, 8, 9, 6, 1],
+                [9, 1, 7, 6, 2, 5, 4, 3, 8]
+            ];
             hoge = false;
         }
-        console.log(value);
     }
     return value;
 }
@@ -58,7 +68,6 @@ function numberValidity(row, col, anser) {
 }
 // 横列に同じ値がないか調べる.
 function rowValidity(rowindex, colindex, value, anser) {
-    // TODO:バリデーション甘め
     for (var i = 0; i <= colindex; i++) {
         if (anser[rowindex][i] == value) {
             return false;
@@ -68,7 +77,6 @@ function rowValidity(rowindex, colindex, value, anser) {
 }
 // 縦列に同じ値がないか調べる。
 function colValidity(rowindex, colindex, value, anser) {
-    // TODO:バリデーション甘め
     for (var i = 0; i <= rowindex; i++) {
         if (anser[i][colindex] == value) {
             return false;
