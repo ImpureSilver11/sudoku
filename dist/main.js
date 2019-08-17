@@ -1,5 +1,6 @@
-// var $ = require('jquery');
-// var createTable = require('./createTable.js');
-// console.log(createTable.initSudoku)
-import { initSudoku } from './createTable';
-console.log(initSudoku);
+"use strict";
+var Sudoku = require('./generateSudoku');
+var anser = new Sudoku.createAnser();
+var question = new Sudoku.createQuestion(anser);
+var table = require('./Table');
+table.create(question);
