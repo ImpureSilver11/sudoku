@@ -1,61 +1,93 @@
-var Anser = initArray();
-export function createAnser() {
+export function init() {
+    var hoge = true;
+    var value;
+    var limit = 0;
+    while (hoge) {
+        value = createAnser();
+        // これだと無限ループになる。
+        hoge = check(value);
+        if (hoge == true) {
+            limit++;
+        }
+        if (limit == 100) {
+            hoge = false;
+        }
+        console.log(value);
+    }
+    return value;
+}
+function check(value) {
+    for (var i = 0; i < 9; i++) {
+        for (var j = 0; j < 9; j++) {
+            if (value[i][j] == 0) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+function createAnser() {
+    var value = initArray();
     for (var rowCount = 0; rowCount < 9; rowCount++) {
         if (rowCount == 0) {
-            Anser[rowCount] = arrayShuffle();
+            value[rowCount] = arrayShuffle();
         }
         else {
             for (var colCount = 0; colCount < 9; colCount++) {
-                arrayShuffle().some(function (num) {
-                    // 入れて大丈夫かどうかのチェック処理
-                    if (numberValidity(rowCount, colCount, num) == true) {
-                        Anser[rowCount][colCount] = num;
-                        return true;
-                    }
-                });
-                if (Anser[rowCount][colCount] == 0) {
-                    // 処理を最初からやり直したい
+                value[rowCount][colCount] = numberValidity(rowCount, colCount, value);
+                if (value[rowCount][colCount] == 0) {
+                    return value;
                 }
             }
-            // fuga[rowCount] = arrayShuffle([1,2,3,4,5,6,7,8,9])
         }
     }
-    console.log(Anser);
-    return Anser;
+    return value;
 }
 // 数値割り当て
-function numberValidity(row, col, value) {
-    return (rowValidity(row, col, value) == true &&
-        colValidity(row, col, value) == true &&
-        aroundValidity(row, col, value) == true) ? true : false;
+function numberValidity(row, col, anser) {
+    var value = 0;
+    arrayShuffle().some(function (num) {
+        if (rowValidity(row, col, num, anser) == true &&
+            colValidity(row, col, num, anser) == true &&
+            aroundValidity(row, col, num, anser) == true) {
+            value = num;
+            return;
+        }
+    });
+    return value;
 }
 // 横列に同じ値がないか調べる.
-function rowValidity(rowindex, colindex, value) {
-    console.log(value);
+function rowValidity(rowindex, colindex, value, anser) {
+    // TODO:バリデーション甘め
     for (var i = 0; i <= colindex; i++) {
-        if (Anser[rowindex][i] == value) {
+        if (anser[rowindex][i] == value) {
             return false;
         }
-        else if (colindex == i) {
-            return true;
-        }
     }
-    return false;
+    return true;
 }
 // 縦列に同じ値がないか調べる。
-function colValidity(rowindex, colindex, value) {
+function colValidity(rowindex, colindex, value, anser) {
+    // TODO:バリデーション甘め
     for (var i = 0; i <= rowindex; i++) {
-        if (Anser[i][colindex] == value) {
+        if (anser[i][colindex] == value) {
             return false;
         }
-        else if (rowindex == i) {
-            return true;
-        }
     }
-    return false;
+    return true;
 }
 // 3×3マスないに同じ値がないか調べる。
-function aroundValidity(rowindex, colindex, value) {
+function aroundValidity(rowindex, colindex, value, anser) {
+    // どの位置に属しているのか判別する
+    var row = Math.floor(rowindex / 3) * 3;
+    var col = Math.floor(colindex / 3) * 3;
+    for (var i = row; i < row + 3; i++) {
+        for (var j = col; j < col + 3; j++) {
+            if (anser[i][j] == value) {
+                return false;
+            }
+        }
+    }
     return true;
 }
 // generate処理
