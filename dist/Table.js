@@ -20,6 +20,7 @@ export function create(anser) {
 }
 export function onChange(anser) {
     $(function () {
+        // TODO:二つ目以降のquestionが発火しない
         $('#question').on('change', function () {
             var text = 'クリア';
             $('#text').html(text);
