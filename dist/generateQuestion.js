@@ -4,7 +4,7 @@ export function init(anser) {
     var question = JSON.parse(JSON.stringify(anser));
     // TODO: 14越えると組み合わせが爆発する
     // var cutCount = 13
-    var cutCount = 1;
+    var cutCount = 2;
     while (cutCount > 0) {
         var row = Math.floor(Math.random() * 9);
         var col = Math.floor(Math.random() * 9);

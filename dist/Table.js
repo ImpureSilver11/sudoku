@@ -5,10 +5,9 @@ export function create(anser) {
   <tbody>";
     anser.forEach(function (rows, rowCount) {
         table += "<tr>";
-        // table += `<td>${rowCount + 1}行目</td>`
         rows.forEach(function (cols, colCount) {
             if (cols == 0) {
-                table += `<td id="question"><input type="number" class="${rowCount}_${colCount}" min="1" max="9"></td>`;
+                table += `<td id="question"><input type="number" class="${rowCount}_${colCount}" min="1" max="9" value='0'></td>`;
             }
             else {
                 table += `<td>${cols}</td>`;
@@ -20,18 +19,19 @@ export function create(anser) {
     $('#sudoku-table').html(table);
 }
 export function onChange(anser) {
-    $('#question').on('change', function () {
-        for (var i = 0; i < 9; i++) {
-            for (var j = 0; j < 9; j++) {
-                var value = $(`.${i}_${j}`);
-                if (value != undefined && value.val() != anser[i][j]) {
-                    return false;
+    $(function () {
+        $('#question').on('change', function () {
+            var text = 'クリア';
+            $('#text').html(text);
+            for (var i = 0; i < 9; i++) {
+                for (var j = 0; j < 9; j++) {
+                    var value = $(`.${i}_${j}`);
+                    if (value.val() != undefined && value.val() != String(anser[i][j])) {
+                        console.log(value.val());
+                        $('#text').html('');
+                    }
                 }
             }
-        }
-        debugger;
-        var text = 'クリア';
-        $('#text').html(text);
+        });
     });
-    return true;
 }

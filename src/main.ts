@@ -7,4 +7,3 @@ var table = require('./table')
 console.log(anser)
 table.create(question)
 table.onChange(anser)
-
