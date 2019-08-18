@@ -94,7 +94,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"init\", function() { return init; });\nfunction init(anser) {\n    var question = anser;\n    // console.log(question)\n    // var cutCount = 10\n    // while(cutCount > 0){\n    //   var row = Math.floor(Math.random() * 9)\n    //   var col = Math.floor(Math.random() * 9)\n    //   // TODO:\n    //   if(rowValid(row,col,question[row][col],question) == true\n    //   //  &&\n    //   //   colValid(row,col,question[row][col],question) == true &&\n    //   //   aroundValid(row,col,question[row][col],question) == true)\n    //   ){\n    //     question[row][col] = 0\n    //     cutCount--\n    //   }\n    // }\n    // 答えの一部を切り取る処理\n    // ランダムな位置を取得\n    // 切り取れるかどうか判別\n    // 切り取れる場合は0か何かに置き換える。\n    // これをランダム回数繰り返す\n    return question;\n}\n\n\n//# sourceURL=webpack:///./dist/generateQuestion.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"init\", function() { return init; });\n/* harmony import */ var _sudokuValidator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sudokuValidator */ \"./dist/sudokuValidator.js\");\n\nfunction init(anser) {\n    // 値渡し\n    var question = JSON.parse(JSON.stringify(anser));\n    // TODO: 14越えると組み合わせが爆発する\n    // var cutCount = 13\n    var cutCount = 1;\n    while (cutCount > 0) {\n        var row = Math.floor(Math.random() * 9);\n        var col = Math.floor(Math.random() * 9);\n        if (Object(_sudokuValidator__WEBPACK_IMPORTED_MODULE_0__[\"rowValid\"])(row, question) == true ||\n            Object(_sudokuValidator__WEBPACK_IMPORTED_MODULE_0__[\"colValid\"])(col, question) == true ||\n            Object(_sudokuValidator__WEBPACK_IMPORTED_MODULE_0__[\"aroundValid\"])(row, col, question) == true) {\n            question[row][col] = 0;\n            cutCount--;\n        }\n    }\n    return question;\n}\n\n\n//# sourceURL=webpack:///./dist/generateQuestion.js?");
 
 /***/ }),
 
@@ -129,7 +129,19 @@ eval("var content = __webpack_require__(/*! !../node_modules/css-loader/dist/cjs
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main.css */ \"./dist/main.css\");\n/* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_main_css__WEBPACK_IMPORTED_MODULE_0__);\n\nvar Sudoku = __webpack_require__(/*! ./generateSudoku */ \"./dist/generateSudoku.js\");\nvar Question = __webpack_require__(/*! ./generateQuestion */ \"./dist/generateQuestion.js\");\nvar anser = new Sudoku.init();\nvar question = new Question.init(anser);\nvar table = __webpack_require__(/*! ./table */ \"./dist/table.js\");\ntable.create(question);\n\n\n//# sourceURL=webpack:///./dist/main.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main.css */ \"./dist/main.css\");\n/* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_main_css__WEBPACK_IMPORTED_MODULE_0__);\n\nvar Sudoku = __webpack_require__(/*! ./generateSudoku */ \"./dist/generateSudoku.js\");\nvar Question = __webpack_require__(/*! ./generateQuestion */ \"./dist/generateQuestion.js\");\nvar anser = new Sudoku.init();\nvar question = new Question.init(anser);\nvar table = __webpack_require__(/*! ./table */ \"./dist/table.js\");\nconsole.log(anser);\ntable.create(question);\ntable.onChange(anser);\n\n\n//# sourceURL=webpack:///./dist/main.js?");
+
+/***/ }),
+
+/***/ "./dist/sudokuValidator.js":
+/*!*********************************!*\
+  !*** ./dist/sudokuValidator.js ***!
+  \*********************************/
+/*! exports provided: rowValid, colValid, aroundValid */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"rowValid\", function() { return rowValid; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"colValid\", function() { return colValid; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"aroundValid\", function() { return aroundValid; });\n// 横列に同じ値がないか調べる.\nfunction rowValid(rowindex, anser) {\n    // 自身以外の同行に0があるかどうか判別\n    for (var i = 0; i < 9; i++) {\n        if (anser[rowindex][i] == 0) {\n            return false;\n        }\n    }\n    return true;\n}\n// 縦列に0がないか調べる。\nfunction colValid(colindex, anser) {\n    for (var i = 0; i < 9; i++) {\n        if (anser[i][colindex] == 0) {\n            return false;\n        }\n    }\n    return true;\n}\n// 3×3マスないに0がないか調べる。\nfunction aroundValid(rowindex, colindex, anser) {\n    // どの位置に属しているのか判別する\n    var row = Math.floor(rowindex / 3) * 3;\n    var col = Math.floor(colindex / 3) * 3;\n    for (var i = row; i < row + 3; i++) {\n        for (var j = col; j < col + 3; j++) {\n            if (anser[i][j] == 0) {\n                return false;\n            }\n        }\n    }\n    return true;\n}\n\n\n//# sourceURL=webpack:///./dist/sudokuValidator.js?");
 
 /***/ }),
 
@@ -137,11 +149,11 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _mai
 /*!***********************!*\
   !*** ./dist/table.js ***!
   \***********************/
-/*! exports provided: create */
+/*! exports provided: create, onChange */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"create\", function() { return create; });\nvar $ = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\");\nfunction create(Anser) {\n    // <thead><tr><th>＼</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr></thead>\\\n    var table = \"<table id='table' class='table table-striped'>\\\n  <tbody>\";\n    Anser.forEach(function (rows, rowCount) {\n        table += \"<tr>\";\n        // table += `<td>${rowCount + 1}行目</td>`\n        rows.forEach(function (cols) {\n            if (cols == 0) {\n                table += `<td><input type=\"number\" id=\"question\" min=\"1\" max=\"9\"></td>`;\n            }\n            else {\n                table += `<td>${cols}</td>`;\n            }\n        });\n        table += \"</tr>\";\n    });\n    table += \"</tr></tbody></table>\";\n    $('#sudoku-table').html(table);\n}\n\n\n//# sourceURL=webpack:///./dist/table.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"create\", function() { return create; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"onChange\", function() { return onChange; });\nvar $ = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\");\nfunction create(anser) {\n    // <thead><tr><th>＼</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr></thead>\\\n    var table = \"<table id='table' class='table table-striped'>\\\n  <tbody>\";\n    anser.forEach(function (rows, rowCount) {\n        table += \"<tr>\";\n        // table += `<td>${rowCount + 1}行目</td>`\n        rows.forEach(function (cols, colCount) {\n            if (cols == 0) {\n                table += `<td id=\"question\"><input type=\"number\" class=\"${rowCount}_${colCount}\" min=\"1\" max=\"9\"></td>`;\n            }\n            else {\n                table += `<td>${cols}</td>`;\n            }\n        });\n        table += \"</tr>\";\n    });\n    table += \"</tr></tbody></table>\";\n    $('#sudoku-table').html(table);\n}\nfunction onChange(anser) {\n    $('#question').on('change', function () {\n        for (var i = 0; i < 9; i++) {\n            for (var j = 0; j < 9; j++) {\n                var value = $(`.${i}_${j}`);\n                if (value != undefined && value.val() != anser[i][j]) {\n                    return false;\n                }\n            }\n        }\n        debugger;\n        var text = 'クリア';\n        $('#text').html(text);\n    });\n    return true;\n}\n\n\n//# sourceURL=webpack:///./dist/table.js?");
 
 /***/ }),
 

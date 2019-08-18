@@ -1,24 +1,19 @@
+import { rowValid, colValid, aroundValid } from './sudokuValidator';
 export function init(anser) {
-    var question = anser;
-    // console.log(question)
-    // var cutCount = 10
-    // while(cutCount > 0){
-    //   var row = Math.floor(Math.random() * 9)
-    //   var col = Math.floor(Math.random() * 9)
-    //   // TODO:
-    //   if(rowValid(row,col,question[row][col],question) == true
-    //   //  &&
-    //   //   colValid(row,col,question[row][col],question) == true &&
-    //   //   aroundValid(row,col,question[row][col],question) == true)
-    //   ){
-    //     question[row][col] = 0
-    //     cutCount--
-    //   }
-    // }
-    // 答えの一部を切り取る処理
-    // ランダムな位置を取得
-    // 切り取れるかどうか判別
-    // 切り取れる場合は0か何かに置き換える。
-    // これをランダム回数繰り返す
+    // 値渡し
+    var question = JSON.parse(JSON.stringify(anser));
+    // TODO: 14越えると組み合わせが爆発する
+    // var cutCount = 13
+    var cutCount = 1;
+    while (cutCount > 0) {
+        var row = Math.floor(Math.random() * 9);
+        var col = Math.floor(Math.random() * 9);
+        if (rowValid(row, question) == true ||
+            colValid(col, question) == true ||
+            aroundValid(row, col, question) == true) {
+            question[row][col] = 0;
+            cutCount--;
+        }
+    }
     return question;
 }
