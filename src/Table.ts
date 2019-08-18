@@ -20,6 +20,7 @@ export function create(anser: Array<Int32List>){
 
 export function onChange(anser: any){
   $(function() {
+    // TODO:二つ目以降のquestionが発火しない
     $('#question').on('change', function(){
       var text = 'クリア'
       $('#text').html(text)
