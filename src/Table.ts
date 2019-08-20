@@ -28,7 +28,6 @@ export function onChange(anser: any){
         for(var j=0;j<9;j++){
           var value = $(`.${i}_${j}`)
           if(value.val() != undefined && value.val() != String(anser[i][j])){
-            console.log(value.val())
             $('#text').html('')
           }
         }
